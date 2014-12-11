@@ -1,8 +1,11 @@
 grammar flight;
-prog: (flight_plan NEWLINE)* ;
+prog: flight_plan SPACE* ;
 NULL : [\r];
+
+SPACE : '\t' | ' ' | '\r' | '\n'| '\u000C';
+
 flight_plan
-		: type aircraft_id aircraft_type true_airspeed departure_point departure_time cruising_alt route destination eta remark fuel alternate_airport pic number_aboard aircraft_color (destination_contact | NULL);
+		: type SPACE+ aircraft_id SPACE+ aircraft_type SPACE+ true_airspeed SPACE+ departure_point SPACE+ departure_time SPACE+ cruising_alt SPACE+ route SPACE+ destination SPACE+ eta SPACE+ remark SPACE+ fuel SPACE+ alternate_airport SPACE+ pic SPACE+ number_aboard SPACE+ aircraft_color SPACE+ (destination_contact | NULL);
 type 
 		: 'VFR' | 'IFR' | 'DVFR';
 NEWLINE
@@ -35,11 +38,11 @@ departure_point
 		: STR;
 
 departure_time
-		: proposed actual;
+		: proposed SPACE+ actual;
 proposed 
-		: 'UTC' time;
+		: 'UTC' SPACE+ time;
 time 
-		: POS_INT POS_INT ':' POS_INT POS_INT;
+		: SPACE* POS_INT SPACE+ POS_INT SPACE* ':' SPACE* POS_INT SPACE+ POS_INT;
 
 actual 
 		: 'UTC' time;
@@ -51,7 +54,7 @@ Number :
 		('0'..'9')+ ('.' ('0'..'9')+)?
 		;
 poly_line 
-		: (Number ',' Number);
+		: Number ',' Number;
 
 airport_name
 		: STR;
@@ -60,26 +63,27 @@ city
 		: STR;
 
 destination 
-		: airport_name city;
+		: airport_name SPACE+ city;
 
 eta		
-		: POS_INT POS_INT;
+		: POS_INT SPACE+ POS_INT;
 remark	
 		: 'NO' | 'DP';
 fuel	
 		: POS_INT 'L';
 
 alternate_airport	
-		: STR lattitude longitude;
+		: STR SPACE+ lattitude SPACE+ longitude;
 pic 
 		: pilot_info aircraft_homebase;
 pilot_info	
-		: pilot_name pilot_address telp;
+		: pilot_name SPACE+ pilot_address SPACE+ telp;
 pilot_name			
 		: STR ;
 pilot_address		: STR ;
 telp				: POS_INT ;
-aircraft_homebase 	: STR ;
+
+aircraft_homebase 	: SPACE* STR ;
 destination_contact	: STR ;
 aircraft_color		: color ;
 color 				: 'BIRU' | 'MERAH' | 'PUTIH' | 'HITAM';

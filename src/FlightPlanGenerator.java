@@ -11,8 +11,23 @@ import org.antlr.v4.runtime.Recognizer;
 
 public class FlightPlanGenerator {
 
-	String all;
-	String[] cut;
+	String type;
+	String aircraft_id;
+	String aircraft_type;
+	String true_airspeed;
+	String departure_point;
+	String departure_time;
+	String cruising_alt;
+	String route;
+	String destination;
+	String eta;
+	String remark;
+	String fuel;
+	String alternate_airport;
+	String pic;
+	String number_aboard;
+	String aircraft_color;
+	String destination_contact;
 
 	public void init(InputStream is) {
 		flightLexer l = null;
@@ -37,35 +52,111 @@ public class FlightPlanGenerator {
 		p.addParseListener(new flightBaseListener() {
 
 			@Override
-			public void exitFlight_plan(flightParser.Flight_planContext ctx) {
-				all = ctx.getText();
+			public void exitType(flightParser.TypeContext ctx) {
+				type = ctx.getText();
 			}
+			
+			@Override
+			public void exitAircraft_id(flightParser.Aircraft_idContext ctx) {
+				aircraft_id = ctx.getText();
+			}
+			
+			@Override
+			public void exitAircraft_type(flightParser.Aircraft_typeContext ctx) {
+				aircraft_type = ctx.getText();
+			}
+			
+			@Override
+			public void exitTrue_airspeed(flightParser.True_airspeedContext ctx) {
+				true_airspeed = ctx.getText();
+			}
+			
+			@Override
+			public void exitDeparture_point(flightParser.Departure_pointContext ctx) {
+				departure_point = ctx.getText();
+			}
+			
+			@Override
+			public void exitDeparture_time(flightParser.Departure_timeContext ctx) {
+				departure_time = ctx.getText();
+			}
+			
+			@Override
+			public void exitCruising_alt(flightParser.Cruising_altContext ctx) {
+				cruising_alt = ctx.getText();
+			}
+			
+			@Override
+			public void exitRoute(flightParser.RouteContext ctx) {
+				route = ctx.getText();
+			}
+			
+			@Override
+			public void exitDestination(flightParser.DestinationContext ctx) {
+				destination = ctx.getText();
+			}
+			
+			@Override
+			public void exitEta(flightParser.EtaContext ctx) {
+				eta = ctx.getText();
+			}
+			
+			@Override
+			public void exitRemark(flightParser.RemarkContext ctx) {
+				remark = ctx.getText();
+			}
+			
+			@Override
+			public void exitFuel(flightParser.FuelContext ctx) {
+				fuel = ctx.getText();
+			}
+			
+			@Override
+			public void exitAlternate_airport(flightParser.Alternate_airportContext ctx) {
+				alternate_airport = ctx.getText();
+			}
+			
+			@Override
+			public void exitPic(flightParser.PicContext ctx) {
+				pic = ctx.getText();
+			}
+			
+			@Override
+			public void exitNumber_aboard(flightParser.Number_aboardContext ctx) {
+				number_aboard = ctx.getText();
+			}
+			
+			@Override
+			public void exitAircraft_color(flightParser.Aircraft_colorContext ctx) {
+				aircraft_color = ctx.getText();
+			}
+			
+			@Override
+			public void exitDestination_contact(flightParser.Destination_contactContext ctx) {
+				destination_contact = ctx.getText();
+			}
+			
 		});
-		
-		System.out.println (all);
-		//cut = all.split(" ");		
 		
 		p.prog();
 		
 		System.out.println("FLIGHT PLAN");
-		System.out.println("type :" + cut[0]);
-		System.out.println("aircraft ID :" + cut[1]);
-		System.out.println("aircraft type :" + cut[2]);
-		System.out.println("true airspeed :" + cut[3]);
-		System.out.println("departure point :" + cut[4]);
-		System.out.println("proposed departure time :" + cut[5] + " " + cut[6] + cut[7] + " " + cut[8] + " " + cut[9] + cut[10]);
-		System.out.println("actual departure time :" + cut[11] + " " + cut[12] + cut[13] + " " + cut[14] + " " + cut[15] + cut[16]);
-		System.out.println("cruising altitude :" + cut[17]);
-		System.out.println("route :" + cut[18] + cut[19] + cut[20]);
-		System.out.println("destination :" + cut[21] + " " + cut[22]);
-		System.out.println("ETA :" + cut[23] + ":" + cut[24]);
-		System.out.println("remark :" + cut[25]);
-		System.out.println("fuel :" + cut[26]);
-		System.out.println("alternate airport :" + cut[27] + " " + cut[28] + " " + cut[29]);
-		System.out.println("PIC :" + cut[30] + " " + cut[31] + " " + cut[32] + " " + cut[33]);
-		System.out.println("number aboard :" + cut[34]);
-		System.out.println("aircraft color :" + cut[35]);
-		System.out.println("destination contact :" + cut[36]);
+		System.out.println("type : " + destination);
+		System.out.println("aircraft ID : " + aircraft_id);
+		System.out.println("aircraft type : " + aircraft_type);
+		System.out.println("true airspeed : " + true_airspeed);
+		System.out.println("departure point : " + departure_point);
+		System.out.println("cruising altitude : " + cruising_alt);
+		System.out.println("route : " + route);
+		System.out.println("destination : " + destination);
+		System.out.println("ETA : " + eta);
+		System.out.println("remark : " + remark);
+		System.out.println("fuel : " + fuel);
+		System.out.println("alternate airport : " + alternate_airport);
+		System.out.println("PIC : " + pic);
+		System.out.println("number aboard : " + number_aboard);
+		System.out.println("aircraft color : " + aircraft_color);
+		System.out.println("destination contact : " + destination_contact);
 		
 
 	}
