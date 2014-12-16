@@ -1,7 +1,11 @@
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BaseErrorListener;
@@ -29,7 +33,7 @@ public class FlightPlanGenerator {
 	String aircraft_color;
 	String destination_contact;
 
-	public void init(InputStream is) {
+	public String[] init(InputStream is) {
 		flightLexer l = null;
 		try {
 			l = new flightLexer(new ANTLRInputStream(is));
@@ -139,13 +143,14 @@ public class FlightPlanGenerator {
 		});
 		
 		p.prog();
-		
+		/*
 		System.out.println("FLIGHT PLAN");
-		System.out.println("type : " + destination);
+		System.out.println("type : " + type);
 		System.out.println("aircraft ID : " + aircraft_id);
 		System.out.println("aircraft type : " + aircraft_type);
 		System.out.println("true airspeed : " + true_airspeed);
 		System.out.println("departure point : " + departure_point);
+		System.out.println("departure time : " + departure_time);
 		System.out.println("cruising altitude : " + cruising_alt);
 		System.out.println("route : " + route);
 		System.out.println("destination : " + destination);
@@ -157,19 +162,89 @@ public class FlightPlanGenerator {
 		System.out.println("number aboard : " + number_aboard);
 		System.out.println("aircraft color : " + aircraft_color);
 		System.out.println("destination contact : " + destination_contact);
-		
+		*/
+		String[] ret = new String[]{type, aircraft_id, aircraft_type,
+				true_airspeed, departure_point, departure_time, cruising_alt,
+				route, destination, eta, remark, fuel, alternate_airport,
+				pic, number_aboard, aircraft_color, destination_contact};
+		return ret;
 
 	}
 	
+	public static void printTable(String[] header, String[][] table){
+		StringBuffer format = new StringBuffer();
+//		for(int i = 0; i < header.length; i++){
+//			format.append("%" + (header[i].length() + 5) + "s");
+//		}
+		format.append("%-13s%-13s%-15s%-15s%-17s%-35s%-19s%-20s%-24s%-7s%-10s%-8s%-27s%-37s%-15s%-15s%-17s");
+		
+		System.out.format(format.toString().concat("\n"), header);
+		for (String[] row : table){
+			System.out.format(format.toString().concat("\n"), row);
+		}
+	}
+	
+	public static String[][] searchRow(String[][] table, int columnNum, String searchTerm){
+		List<String[]> ret = new ArrayList<String[]>();
+		for(String[] row : table){
+			if (row[columnNum].contentEquals(searchTerm)) ret.add(row);
+		}
+		return ret.toArray(new String[ret.size()][]);
+	}
+	
+	public enum columnNames {flight_type, aircraft_id, aircraft_type, true_airspeed, departure_point, departure_time, cruising_altitude, route, destination, eta, remark, fuel, alternate_airport, pic, number_aboard, aircraft_color, destination_contact};
+	
 	public static void main(String[] args) {
 		FlightPlanGenerator fpg = new FlightPlanGenerator();
+		
 		try {
-			FileInputStream fis = new FileInputStream("doc/testcase");
-			fpg.init(fis);
+			FileInputStream fis;
+			int numberTestCase = 3;
+			
+			StringBuffer testcaseFileFormat = new StringBuffer();
+			testcaseFileFormat.append("doc/testcase");
+			
+			String[] header = new String[]{"Flight_Type", "Aircraft_ID", "Aircraft_Type", "True_Airspeed", "Departure_Point", "Departure_Time", "Cruising_Altitude", "Route", "Destination", "ETA", "Remark", "Fuel", "Alternate_Airport", "PIC", "Number_Aboard", "Aircraft_Color", "Destination_Contact"};
+			String[][] flightTable = new String[numberTestCase][];
+			
+			//Initialize flight plan table from N testcase files
+			for(int i = 0; i < numberTestCase; i++){
+				fis = new FileInputStream(testcaseFileFormat.toString().concat(String.valueOf(i+1)));
+				flightTable[i] = fpg.init(fis);
+			}
+			
+			//Print initial table
+			printTable(header, flightTable);
+			
+			
+			//Prompt for user's input
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			String input = null;
+			do {
+				try{
+					System.out.println("Enter command.\n1. Search a specific plan: search <column_name> <search term>\n2. Terminat: quit");
+					input = reader.readLine();
+					String[] inputArgs = input.split("\\s+");
+					
+					//Do search on flight plan table
+					if (inputArgs[0].contentEquals("search") && inputArgs.length == 3){
+						String[][] ret = searchRow(flightTable, columnNames.valueOf(inputArgs[1].toLowerCase()).ordinal(), inputArgs[2]);
+						System.out.println("Search Result:");
+						if (ret.length > 0){
+							printTable(header, ret);
+						} else {
+							System.out.println("No plans matched");
+						}
+					}
+				} catch (IOException ioe){
+					System.out.println("Error while reading input.");
+				}
+			} while (!input.contentEquals("quit"));
+			
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 }

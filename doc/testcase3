@@ -1,0 +1,19 @@
+CREATE PLAN :
+	tipe <= IFR
+	id_pesawat <= FOK
+	tipe_pesawat <= 2
+	kecepatan <= 900
+	pendaratan <= JAKARTA
+	waktu_mendarat <= UTC 0 7 : 3 0 UTC 0 8 : 0 5 
+	cruising_altitude <= 150
+	route <= 115.10,8.44
+	tujuan <= NGURAHRAI DENPASAR
+	eta <= 1 20
+	remark <= NO
+	tangki <= 10000L
+	bandara_alternatif <= LOMBOK 116.16 8.45
+	PIC <= ALDY JAKARTA 0857123456 BALI
+	nomor_berangkat <= 197
+	warna_pesawat <= PUTIH
+	kontak_tujuan <= TIDAKADA
+END;

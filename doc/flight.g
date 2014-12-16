@@ -2,10 +2,28 @@ grammar flight;
 prog: flight_plan SPACE* ;
 NULL : [\r];
 
-SPACE : '\t' | ' ' | '\r' | '\n'| '\u000C';
+SPACE : '\t' | ' ' | '\r' | '\n'| '\u000C' | '\n\t';
 
 flight_plan
-		: type SPACE+ aircraft_id SPACE+ aircraft_type SPACE+ true_airspeed SPACE+ departure_point SPACE+ departure_time SPACE+ cruising_alt SPACE+ route SPACE+ destination SPACE+ eta SPACE+ remark SPACE+ fuel SPACE+ alternate_airport SPACE+ pic SPACE+ number_aboard SPACE+ aircraft_color SPACE+ (destination_contact | NULL);
+		: 'CREATE PLAN :' SPACE+ 
+		   'tipe <=' SPACE+ type SPACE+
+		   'id_pesawat <=' SPACE+ aircraft_id SPACE+
+		   'tipe_pesawat <=' SPACE+ aircraft_type SPACE+ 
+		   'kecepatan <=' SPACE+ true_airspeed SPACE+ 
+		   'pendaratan <=' SPACE+ departure_point SPACE+ 
+		   'waktu_mendarat <=' SPACE+ departure_time SPACE+ 
+		   'cruising_altitude <=' SPACE+ cruising_alt SPACE+ 
+		   'route <=' SPACE+ route SPACE+ 
+		   'tujuan <=' SPACE+ destination SPACE+ 
+		   'eta <=' SPACE+ eta SPACE+ 
+		   'remark <=' SPACE+ remark SPACE+ 
+		   'tangki <=' SPACE+ fuel SPACE+ 
+		   'bandara_alternatif <=' SPACE+ alternate_airport SPACE+ 
+		   'PIC <=' SPACE+ pic SPACE+ 
+		   'nomor_berangkat <=' SPACE+ number_aboard SPACE+ 
+		   'warna_pesawat <=' SPACE+ aircraft_color SPACE+ 
+		   'kontak_tujuan <=' SPACE+ (destination_contact | NULL) SPACE+
+		   'END;';
 type 
 		: 'VFR' | 'IFR' | 'DVFR';
 NEWLINE

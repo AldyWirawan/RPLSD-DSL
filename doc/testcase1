@@ -1,0 +1,19 @@
+CREATE PLAN :
+	tipe <= VFR
+	id_pesawat <= BOE
+	tipe_pesawat <= 5
+	kecepatan <= 1000
+	pendaratan <= BEKASI
+	waktu_mendarat <= UTC 4 5 : 23 54 UTC 6 7 : 24 50 
+	cruising_altitude <= 98 
+	route <= 104.9,63.7 
+	tujuan <= BEKASIAIRPORT INDONESIA
+	eta <= 10 15
+	remark <= DP
+	tangki <= 6000L
+	bandara_alternatif <= CIKARANGAIRPORT 109.2 62.7
+	PIC <= HABIBIE BANDUNG 08561435232 CIMAHI
+	nomor_berangkat <= 7
+	warna_pesawat <= BIRU
+	kontak_tujuan <= TIDAKADA
+END;

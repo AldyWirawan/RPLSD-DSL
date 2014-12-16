@@ -1,0 +1,19 @@
+CREATE PLAN :
+	tipe <= IFR
+	id_pesawat <= BOE
+	tipe_pesawat <= 17
+	kecepatan <= 700
+	pendaratan <= BANDUNG
+	waktu_mendarat <= UTC 1 9 : 2 0 UTC 1 9 : 2 0 
+	cruising_altitude <= 170
+	route <= 106.39,6.27 
+	tujuan <= SOETTA TANGERANG
+	eta <= 0 40
+	remark <= NO
+	tangki <= 8000L
+	bandara_alternatif <= HALIM 106.53 6.15
+	PIC <= VAI TANGERANG 085777777 TANGERANG
+	nomor_berangkat <= 104
+	warna_pesawat <= BIRU
+	kontak_tujuan <= TIDAKADA
+END;
